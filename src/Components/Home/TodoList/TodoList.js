@@ -14,7 +14,7 @@ const TodoList = () => {
         const description = e.target.description.value;
         const email = user?.email;
         const task = { taskname, description, email, status: "pending" }
-        fetch('http://localhost:5000/addTask', {
+        fetch('https://still-citadel-42786.herokuapp.com/addTask', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -30,7 +30,7 @@ const TodoList = () => {
     }
 
     const { isLoading, error, data: todos, refetch } = useQuery('task', () =>
-        fetch(`http://localhost:5000/task/${user?.email}`).then(res =>
+        fetch(`https://still-citadel-42786.herokuapp.com/task/${user?.email}`).then(res =>
             res.json()
         )
     )
