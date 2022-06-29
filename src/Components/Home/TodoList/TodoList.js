@@ -1,15 +1,19 @@
 import React from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query'
+import auth from '../../../firebase.init';
 import './TodoList.css'
 import TodoRow from './TodoRow';
 
 const TodoList = () => {
+    const [user] = useAuthState(auth)
     const handleAddTask = (e) => {
         e.preventDefault()
         const taskname = e.target.task.value;
         const description = e.target.description.value;
-        const task = { taskname, description, status: "pending" }
+        const email = user?.email;
+        const task = { taskname, description, email, status: "pending" }
         fetch('http://localhost:5000/addTask', {
             method: "POST",
             headers: {
@@ -20,12 +24,13 @@ const TodoList = () => {
             .then(data => {
                 if (data.insertedId) {
                     e.target.reset()
+                    refetch()
                 }
             })
     }
 
     const { isLoading, error, data: todos, refetch } = useQuery('task', () =>
-        fetch('http://localhost:5000/task').then(res =>
+        fetch(`http://localhost:5000/task/${user?.email}`).then(res =>
             res.json()
         )
     )
@@ -65,9 +70,9 @@ const TodoList = () => {
                         <Form.Label className='fw-bold'>Task Name</Form.Label>
                         <Form.Control name='task' type="text" placeholder="Enter task name" />
                     </Form.Group>
-                    <div class="mb-3">
-                        <label for="description" class="form-label fw-bold">Example textarea</label>
-                        <textarea name='description' class="form-control" id="description" rows="3"></textarea>
+                    <div className="mb-3">
+                        <label htmlFor="description" className="form-label fw-bold">Example textarea</label>
+                        <textarea name='description' className="form-control" id="description" rows="3"></textarea>
                     </div>
                     <Button variant="primary" type="submit">
                         Add Task

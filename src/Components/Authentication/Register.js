@@ -14,6 +14,7 @@ const Register = () => {
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const navigate = useNavigate()
 
+
     const handleSignup = async (e) => {
         e.preventDefault()
         const name = e.target.name.value;

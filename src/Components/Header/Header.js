@@ -15,9 +15,10 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/manage-profile">Manage Profile</Nav.Link>
                         {!user ? <Nav.Link className='fw-bold' as={Link} to="/login">Login</Nav.Link> :
-                            <Button onClick={() => signOut(auth)} className="btn btn-light fw-bold" >SignOut</Button>}
+                            <>
+                                <Nav.Link as={Link} to="/manage-profile">Manage Profile</Nav.Link>
+                                <Button onClick={() => signOut(auth)} className="btn btn-light fw-bold" >SignOut</Button></>}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
