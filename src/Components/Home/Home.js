@@ -1,9 +1,10 @@
 import React from 'react';
+import StartPage from './StartPage';
 
 const Home = () => {
     return (
         <div>
-            home
+            <StartPage />
         </div>
     );
 };
