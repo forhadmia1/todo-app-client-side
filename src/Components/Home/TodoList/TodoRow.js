@@ -5,7 +5,7 @@ const TodoRow = ({ todo, index, refetch }) => {
     const handleDelete = (id) => {
         const isAgree = window.confirm()
         if (isAgree) {
-            fetch(`http://localhost:5000/task/${id}`, {
+            fetch(`https://still-citadel-42786.herokuapp.com/task/${id}`, {
                 method: "DELETE"
             }).then(res => res.json())
                 .then(result => {
@@ -16,7 +16,7 @@ const TodoRow = ({ todo, index, refetch }) => {
     }
 
     const handleCompleted = (id) => {
-        fetch(`http://localhost:5000/task/${id}`, {
+        fetch(`https://still-citadel-42786.herokuapp.com/task/${id}`, {
             method: "PUT"
         }).then(res => res.json())
             .then(result => {
