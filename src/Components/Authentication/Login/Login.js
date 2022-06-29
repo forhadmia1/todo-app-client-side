@@ -1,15 +1,27 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import './Login.css'
 
 const Login = () => {
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    const navigate = useNavigate()
 
     const handleLogin = (e) => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password)
+        signInWithEmailAndPassword(email, password)
+    }
+    if (user) {
+        navigate('/')
     }
 
     return (
@@ -26,6 +38,7 @@ const Login = () => {
                         <Form.Control name='password' type="password" placeholder="Password" />
                     </Form.Group>
                     <p>Create an account. <Link className='fw-bold text-decoration-none' to={'/register'}>Signup</Link></p>
+                    <p className='text-center text-danger'>{error && error.code.split('/')[1]}</p>
                     <div className='d-flex justify-content-center'>
                         <Button variant="primary" type="submit">
                             Login
